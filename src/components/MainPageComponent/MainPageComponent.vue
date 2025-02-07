@@ -30,7 +30,7 @@
                 ref="codeEditor"
                 v-model="codeInput"
                 @input="updateHighlight"
-                placeholder="HTML kodunuzu buraya girin..."
+                placeholder="Kodunuzu buraya girin..."
                 class="w-full h-full p-4 bg-transparent font-mono text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 resize-none transition duration-300 absolute top-0 left-0 z-10"
                 spellcheck="false"
               ></textarea>
