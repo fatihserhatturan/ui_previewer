@@ -62,11 +62,8 @@ export function createVueProject(vueCode) {
         },
         dependencies: {
           'core-js': '^3.8.3',
-          'vue': '^3.2.13'
-        },
-        devDependencies: {
-          '@vue/cli-plugin-babel': '~5.0.0',
-          '@vue/cli-service': '~5.0.0'
+          'vue': '^3.5.13',
+          'typescript': '^5.7.3'
         }
       }, null, 2),
       'babel.config.js': `
@@ -105,7 +102,7 @@ export function createVueProject(vueCode) {
       files,
       title: 'Vue Preview',
       description: 'Vue Component Preview',
-      template: 'vue-cli'
+      template: 'vue'
     };
 
     return project;

@@ -4,8 +4,7 @@ import javascript from 'highlight.js/lib/languages/javascript';
 import jsx from 'highlight.js/lib/languages/javascript';
 import html from 'highlight.js/lib/languages/xml';
 import 'highlight.js/styles/github.css';
-import { createReactProject } from './helper';
-import { createVueProject } from './helper';
+import { createHtmlProject, createReactProject, createVueProject } from './helper';
 
 hljs.registerLanguage('javascript', javascript);
 hljs.registerLanguage('jsx', jsx);
@@ -18,7 +17,12 @@ export default {
       codeInput: '',
       vm: null,
       highlightedCode: '',
-      selectedFramework: 'react'
+      selectedFramework: 'react',
+      frameworks: [
+        { id: 'vue', label: 'VUE' },
+        { id: 'react', label: 'REACT' },
+        { id: 'html', label: 'HTML' }
+      ]
     };
   },
   mounted() {
@@ -26,10 +30,14 @@ export default {
     this.syncScroll();
   },
   methods: {
+    selectFramework(framework) {
+      this.selectedFramework = framework;
+      this.updateHighlight();
+    },
     updateHighlight() {
       const code = this.codeInput || '';
-
-      const language = this.selectedFramework === 'vue' ? 'html' : 'jsx';
+      const language = this.selectedFramework === 'html' ? 'html' :
+                      this.selectedFramework === 'vue' ? 'html' : 'jsx';
 
       this.highlightedCode = hljs.highlight(code, { language }).value;
 
@@ -57,10 +65,16 @@ export default {
       const code = this.codeInput;
       let project;
 
-      if (this.selectedFramework === 'vue') {
-        project = createVueProject(code);
-      } else {
-        project = createReactProject(code);
+      switch(this.selectedFramework) {
+        case 'vue':
+          project = createVueProject(code);
+          break;
+        case 'react':
+          project = createReactProject(code);
+          break;
+        case 'html':
+          project = createHtmlProject(code);
+          break;
       }
 
       if (this.vm) {
@@ -82,10 +96,6 @@ export default {
         await this.vm.destroy();
         this.vm = null;
       }
-    },
-    toggleFramework() {
-      this.selectedFramework = this.selectedFramework === 'react' ? 'vue' : 'react';
-      this.updateHighlight();
     }
   }
 };
